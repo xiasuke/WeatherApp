@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% block content %}
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css">
+    <form action=""  method="post" name="cityweatherform">
+        {{ searchform.hidden_tag() }}
+            Please enter the city:<br>
+        {{ searchform.city(size=50, id="autocomplete", placeholder="City", autocomplete="off") }}
+        <input type="submit" value="Search"><br>
+        <p>
+            {% for error in searchform.city.errors %}
+                <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}<br>
+        </p>
+    </form>
+
+    {% if cityinfo %}
+    <form action="" method="post" name="duplicatecitylisty">
+        {{ cityinfo.hidden_tag() }}
+        {{ cityinfo.city_list(size=numcityinfo, onclick="duplicatecitylisty.submit()")}}
+        <p>
+            {% for error in cityinfo.city_list.errors %}
+                <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}<br>
+        </p>
+    </form>
+    {% endif %}
+<script>
+    var tags = {{ entries|tojson }};
+    $( "#autocomplete" ).autocomplete({
+        minLength: 3,
+        source: function( request, response ) {
+              var matcher = new RegExp( "^" + $.ui.autocomplete.escapeRegex( request.term ), "i" );
+              response( $.grep( tags, function( item ){
+                  return matcher.test( item );
+              }) );
+          }
+    });
+</script>
+{% endblock %}

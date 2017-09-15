@@ -1,0 +1,40 @@
+{% extends "index.html" %}
+{% block content %}
+<style>
+table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+}
+
+td, th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+}
+
+tr:nth-child(even) {
+    background-color: #dddddd;
+}
+</style>
+<h1>Weather for: {{ title }}</h1>
+<h2>{{ temp }} Kelvin</h2>
+<h3>{{ weatherdescrip }}</h3>
+    {% if curweather %}
+        <div>
+            <table>
+                {% for key, value in curweather.iteritems() %}
+                <tr>
+                    <th> {{ key }} </th>
+                    <td> {{ value }} </td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+    {% endif %}
+
+    {% if forecast_info %}
+        <div>
+            <p>{{ forecast_info }}</p>
+        </div>
+    {% endif %}
+{% endblock %}

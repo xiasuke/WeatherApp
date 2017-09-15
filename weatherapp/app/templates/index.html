@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block content %}
+    <h1>Weather for:</h1>
+    <form action="" method="post" name="cityweatherform">
+        {{ form.hidden_tag() }}
+        <p>
+            Please enter the city:<br>
+            {{ form.city(size=50, list="city_list", placeholder="City", autocomplete="off") }}
+            <datalist id="city_list">
+            {% for entry in entries %}
+                <option value={{ entry }}></option>
+            {% endfor %}
+            </datalist>
+            <input type="submit" value="Search"><br>
+        </p>
+        <p>
+            {% for error in form.city.errors %}
+                <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}<br>
+        </p>
+    </form>
+    {% for city in cityinfo %}
+        <div><p>{{ city }} </p></div>
+    {% endfor %}
+{% endblock %}
