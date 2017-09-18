@@ -3,6 +3,7 @@ from common import CommonHelper
 
 JSON_FILE = os.path.abspath(os.path.dirname(__file__)) + "/../static/city.list.json"
 CITIES_INFO = CommonHelper.load_city_list_json(JSON_FILE)
+JAVASCRIPT_PATH = os.path.abspath(os.path.dirname(__file__)) + "/../javascript"
 
 # OWM API related URL
 ROOT_OMW_URL = "http://api.openweathermap.org/data/2.5"

@@ -5,6 +5,7 @@ from app import app
 from .forms import CityInputForm, SelectCityForm
 from .models import Cities, CurrentWeather
 from controller import InputHandler
+from common.constants import JAVASCRIPT_PATH
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
@@ -72,10 +73,5 @@ def current_weather(city_id):
                            weatherdescrip=cur_response_builder.weather_description,
                            temp=cur_response_builder.current_temp,
                            curweather = cur_response,
+                           curweathericon=cur_weather_result['weather'][0]["icon"],
                            forecast_info=forecast_result["list"])
-
-
-@app.route('/daily_forecast/<city_id>', methods=['GET', 'POST'])
-def daily_forecast(city_id):
-    forecast_result = InputHandler().get_city_forecast(city_id)
-    return

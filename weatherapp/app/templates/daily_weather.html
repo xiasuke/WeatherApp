@@ -1,0 +1,78 @@
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}" >
+<div class="cd-schedule loading">
+	<div class="timeline">
+		<ul>
+			<li><span>00:00</span></li>
+			<li><span>03:00</span></li>
+			<li><span>06:00</span></li>
+			<li><span>09:00</span></li>
+			<li><span>12:00</span></li>
+			<li><span>15:00</span></li>
+			<li><span>18:00</span></li>
+			<li><span>21:00</span></li>
+			<li><span>23:59</span></li>
+		</ul>
+	</div> <!-- .timeline -->
+
+    <div class="events">
+		<ul>
+            {% for info in forecast_info%}
+			<li class="events-group">
+				<div class="top-info"><span class="days" id="days" date-string="{{ info[0].dt_txt }}"></span></div>
+				<!--<div class="top-info"><span>Monday</span></div>-->
+
+				<ul>
+                    {% for daily_info in info %}
+					<li class="single-event" data-start="{{ daily_info.dt_txt }}" data-end=""
+                        data-content-main-temp-min="{{ daily_info.main.temp_min }}"
+                        data-content-main-temp-max="{{ daily_info.main.temp_max }}"
+                        data-content-main-humid="{{ daily_info.main.humidity }}"
+                        data-content-weather-icon="{{ daily_info.weather[0].icon }}"
+                        data-content-wind-speed="{{ daily_info.wind.speed }}"
+                        data-content-cloud="{{ daily_info.clouds.all }}"
+                        data-weather="{{ daily_info.weather[0].description }}"
+                        data-content="{{ daily_info.weather }}" data-event="event-1">
+						<a href="#0">
+                            <img style="float:left;" class="weather_icon" src="http://openweathermap.org/img/w/{{ daily_info.weather[0].icon }}.png">
+                            <span>{{ daily_info.main.temp }}</span>
+						</a>
+
+					</li>
+                    {% endfor %}
+				</ul>
+			</li>
+            {% endfor %}
+		</ul>
+	</div>
+
+	<div class="event-modal">
+		<header class="header">
+			<div class="content">
+				<span class="event-date"></span>
+				<h3 class="event-name"></h3>
+			</div>
+
+			<div class="header-bg"></div>
+		</header>
+
+		<div class="body">
+			<div class="event-info"></div>
+			<div class="body-bg"></div>
+		</div>
+
+		<a href="#0" class="close">Close</a>
+	</div>
+
+	<div class="cover-layer"></div>
+</div> <!-- .cd-schedule -->
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script src="{{ url_for('static', filename='javascript/forecast.js') }}"></script>
+<script>
+    var top_info_list = document.getElementsByClassName("days");
+    for (i = 0; i < top_info_list.length; i++) {
+        var datestring = top_info_list[i].getAttribute("date-string");
+        var d = new Date(datestring);
+        var days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+        top_info_list[i].innerHTML = days[d.getDay()];
+    }
+</script>
